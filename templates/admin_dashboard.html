@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block head %}
+<style>
+.hero-admin{
+background:linear-gradient(135deg,#FF5A5F,#FF7A59);
+border-radius:24px;
+padding:40px;
+color:#fff;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+box-shadow:0 18px 35px rgba(255,90,95,.25);
+margin-bottom:35px;
+}
+.hero-admin h1{font-size:38px;margin-bottom:10px}
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:22px;
+margin-bottom:35px;
+}
+.stat{
+background:#fff;
+padding:28px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+position:relative;
+overflow:hidden;
+}
+.stat:hover{transform:translateY(-8px)}
+.stat i{
+position:absolute;
+right:18px;
+top:18px;
+font-size:36px;
+color:#FFE4E6;
+}
+.stat h2{
+font-size:34px;
+color:#FF5A5F;
+}
+.section{
+background:#fff;
+padding:28px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+margin-bottom:30px;
+}
+.section h2{
+margin-bottom:20px;
+color:#111827;
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+th{
+background:#FF5A5F;
+color:#fff;
+padding:15px;
+}
+td{
+padding:14px;
+border-bottom:1px solid #eee;
+}
+tr:hover{
+background:#FFF7F7;
+}
+.role{
+padding:6px 14px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+}
+.admin{background:#FECACA;color:#991B1B;}
+.owner{background:#FDE68A;color:#92400E;}
+.tenant{background:#DBEAFE;color:#1E40AF;}
+.status{
+padding:6px 14px;
+border-radius:20px;
+font-weight:600;
+}
+.available{
+background:#DCFCE7;
+color:#166534;
+}
+.filled{
+background:#FECACA;
+color:#991B1B;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="hero-admin">
+<div>
+<h1>Admin Dashboard 🛡️</h1>
+<p>Manage users, monitor listings, and oversee the RentFlat platform.</p>
+</div>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<i class="fa-solid fa-users"></i>
+<h2>{{ users|length }}</h2>
+<p>Total Users</p>
+</div>
+
+<div class="stat">
+<i class="fa-solid fa-building"></i>
+<h2>{{ listings|length }}</h2>
+<p>Total Listings</p>
+</div>
+
+<div class="stat">
+<i class="fa-solid fa-chart-line"></i>
+<h2>100%</h2>
+<p>System Health</p>
+</div>
+
+<div class="stat">
+<i class="fa-solid fa-shield-halved"></i>
+<h2>Secure</h2>
+<p>Platform Status</p>
+</div>
+
+</div>
+
+<div class="section">
+<h2>Registered Users</h2>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Role</th>
+<th>Action</th>
+</tr>
+
+{% for u in users %}
+<tr>
+
+<td>{{ u.name }}</td>
+
+<td>{{ u.email }}</td>
+
+<td>
+
+<span class="role {{ u.role }}">
+{{ u.role|capitalize }}
+</span>
+
+</td>
+
+<td>
+
+{% if u.role!='admin' %}
+<a href="{{ url_for('delete_user',uid=u.id) }}" class="btn btn-danger">
+Delete
+</a>
+{% else %}
+-
+{% endif %}
+
+</td>
+
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>Property Listings</h2>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+
+<th>Location</th>
+
+<th>Rent</th>
+
+<th>Status</th>
+
+</tr>
+
+{% for l in listings %}
+
+<tr>
+
+<td>#{{ l.id }}</td>
+
+<td>{{ l.location }}</td>
+
+<td>₹ {{ l.rent }}</td>
+
+<td>
+
+{% if l.filled %}
+<span class="status filled">Filled</span>
+{% else %}
+<span class="status available">Available</span>
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

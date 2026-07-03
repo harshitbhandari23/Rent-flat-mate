@@ -1,0 +1,38 @@
+:root{--primary:#2563eb;--bg:#f5f7fb;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--good:#16a34a;--warn:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+nav{display:flex;align-items:center;gap:18px;background:var(--card);padding:14px 24px;border-bottom:1px solid var(--border)}
+nav a{color:var(--text);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--primary)}
+.brand{font-weight:700;font-size:16px;color:var(--primary)!important}
+.spacer{flex:1}
+.user{color:var(--muted);font-size:13px}
+main{max-width:960px;margin:24px auto;padding:0 20px}
+.flash{background:#fef3c7;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:16px}
+h1,h2{margin-top:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+form{display:flex;flex-direction:column;gap:12px;max-width:420px}
+input,select,textarea{padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px}
+label{font-size:13px;color:var(--muted);margin-bottom:-6px}
+button,.btn{background:var(--primary);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+button:hover,.btn:hover{opacity:.9}
+.btn-outline{background:transparent;color:var(--primary);border:1px solid var(--primary)}
+.btn-danger{background:#dc2626}
+.score{font-weight:700;padding:4px 10px;border-radius:20px;font-size:13px}
+.score.high{background:#dcfce7;color:var(--good)}
+.score.mid{background:#fef3c7;color:var(--warn)}
+.score.low{background:#fee2e2;color:#dc2626}
+.listing-photo{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#e2e8f0}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
+.muted{color:var(--muted);font-size:13px}
+.row{display:flex;gap:10px}
+.center{text-align:center;margin-top:60px}
+.auth-card{max-width:380px;margin:60px auto}
+.chat-box{height:420px;overflow-y:auto;background:#fafafa;border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px}
+.msg{margin-bottom:10px;max-width:70%;padding:8px 12px;border-radius:10px;background:#eef2ff}
+.msg.mine{margin-left:auto;background:var(--primary);color:#fff}
+.msg .meta{font-size:11px;opacity:.7;margin-bottom:2px}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1}

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}Add New Listing{% endblock %}
+
+{% block head %}
+<style>
+.page{
+max-width:950px;
+margin:auto;
+}
+.hero{
+background:linear-gradient(135deg,#FF5A5F,#FF7A59);
+padding:40px;
+border-radius:24px;
+color:white;
+margin-bottom:35px;
+box-shadow:0 15px 35px rgba(255,90,95,.25);
+}
+.hero h1{
+font-size:38px;
+margin-bottom:10px;
+}
+.form-card{
+background:#fff;
+border-radius:24px;
+padding:35px;
+box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:22px;
+}
+.group{
+margin-bottom:20px;
+}
+label{
+display:block;
+margin-bottom:8px;
+font-weight:600;
+color:#374151;
+}
+input,select{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:15px;
+transition:.3s;
+}
+input:focus,select:focus{
+outline:none;
+border-color:#FF5A5F;
+box-shadow:0 0 0 4px rgba(255,90,95,.15);
+}
+.preview{
+margin-top:25px;
+text-align:center;
+}
+.preview img{
+width:100%;
+max-width:450px;
+height:250px;
+object-fit:cover;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+.buttons{
+display:flex;
+gap:15px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+.tip{
+background:#FFF7F7;
+border-left:5px solid #FF5A5F;
+padding:15px;
+border-radius:10px;
+margin-bottom:25px;
+color:#555;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="page">
+
+<div class="hero">
+<h1>🏡 Add New Property</h1>
+<p>Create a listing and let AI find the most compatible tenants for you.</p>
+</div>
+
+<div class="form-card">
+
+<div class="tip">
+<b>Tip:</b> Listings with images and complete information usually receive more tenant interest.
+</div>
+
+<form method="POST">
+
+<div class="grid">
+
+<div class="group">
+<label>📍 Location</label>
+<input
+type="text"
+name="location"
+placeholder="e.g. Indiranagar, Bangalore"
+required>
+</div>
+
+<div class="group">
+<label>💰 Monthly Rent</label>
+<input
+type="number"
+name="rent"
+placeholder="15000"
+required>
+</div>
+
+<div class="group">
+<label>📅 Available From</label>
+<input
+type="date"
+name="available_from"
+required>
+</div>
+
+<div class="group">
+<label>🛏 Room Type</label>
+<select name="room_type" required>
+<option value="">Select Room Type</option>
+<option>Single Room</option>
+<option>Shared Room</option>
+<option>1 BHK</option>
+<option>2 BHK</option>
+<option>3 BHK</option>
+</select>
+</div>
+
+<div class="group">
+<label>🪑 Furnishing</label>
+<select name="furnishing" required>
+<option value="">Select Furnishing</option>
+<option>Fully Furnished</option>
+<option>Semi Furnished</option>
+<option>Unfurnished</option>
+</select>
+</div>
+
+<div class="group">
+<label>🖼 Property Image URL</label>
+<input
+id="photo"
+type="url"
+name="photo_url"
+placeholder="https://example.com/image.jpg"
+oninput="previewImage()">
+</div>
+
+</div>
+
+<div class="preview">
+
+<img
+id="imgPreview"
+src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200"
+alt="Preview">
+
+</div>
+
+<div class="buttons">
+
+<button class="btn btn-primary" type="submit">
+<i class="fa-solid fa-plus"></i>
+Publish Listing
+</button>
+
+<a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+Cancel
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function previewImage(){
+let url=document.getElementById("photo").value;
+let img=document.getElementById("imgPreview");
+
+if(url.trim()==""){
+img.src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200";
+}
+else{
+img.src=url;
+}
+}
+</script>
+{% endblock %}

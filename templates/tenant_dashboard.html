@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Tenant Dashboard{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:25px;">
+<div>
+<h2>👋 Welcome {{ current_user.name }}</h2>
+<p style="color:#6B7280;">Find rooms matched to your preferences.</p>
+</div>
+<div style="display:flex;gap:10px;">
+<a class="btn btn-secondary" href="{{ url_for('profile') }}">Edit Profile</a>
+<a class="btn btn-primary" href="{{ url_for('browse') }}">Browse Listings</a>
+</div>
+</div>
+
+<div class="grid">
+<div class="card">
+<h3>Your Profile</h3>
+{% if profile %}
+<p><b>Preferred:</b> {{ profile.preferred_location }}</p>
+<p><b>Budget:</b> ₹{{ profile.budget_min }} - ₹{{ profile.budget_max }}</p>
+<p><b>Move In:</b> {{ profile.move_in_date }}</p>
+<a class="btn btn-primary" href="{{ url_for('browse') }}">View Matches</a>
+{% else %}
+<p>You haven't completed your profile.</p>
+<a class="btn btn-primary" href="{{ url_for('profile') }}">Complete Profile</a>
+{% endif %}
+</div>
+
+<div class="card">
+<h3>Quick Actions</h3>
+<div style="display:grid;gap:12px;">
+<a class="btn btn-secondary" href="{{ url_for('browse') }}">🔍 Browse Rooms</a>
+<a class="btn btn-primary" href="{{ url_for('chats') }}">💬 Open Chats</a>
+<a class="btn btn-secondary" href="{{ url_for('profile') }}">⚙ Update Preferences</a>
+</div>
+</div>
+
+<div class="card">
+<h3>AI Matching</h3>
+<p>Your compatibility scores are generated automatically based on your budget and preferred location.</p>
+<div style="height:10px;background:#eee;border-radius:20px;margin:18px 0;">
+<div style="width:90%;height:100%;background:#00A699;border-radius:20px;"></div>
+</div>
+<p style="color:#00A699;font-weight:bold;">Ready to explore!</p>
+</div>
+</div>
+{% endblock %}

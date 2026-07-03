@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Tenant Dashboard{% endblock %}
+
+{% block head %}
+<style>
+.hero{
+display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
+background:linear-gradient(135deg,#FF5A5F,#FF7A59);
+padding:42px;border-radius:24px;color:#fff;margin-bottom:35px;
+box-shadow:0 18px 35px rgba(255,90,95,.25)}
+.hero h1{font-size:38px;margin-bottom:10px}
+.quick,.feature{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.quick{margin:35px 0}
+.box,.feature-card,.profile-card{
+background:#fff;border-radius:20px;padding:28px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);transition:.3s}
+.box:hover,.feature-card:hover,.profile-card:hover{transform:translateY(-8px)}
+.box i{font-size:38px;color:#FF5A5F;margin-bottom:15px}
+.profile-card{display:grid;grid-template-columns:120px 1fr;gap:25px;align-items:center}
+.avatar{
+width:110px;height:110px;border-radius:50%;
+background:linear-gradient(135deg,#FF5A5F,#FF7A59);
+display:flex;align-items:center;justify-content:center;
+font-size:46px;color:#fff;font-weight:700}
+.progress{height:12px;background:#F3F4F6;border-radius:20px;overflow:hidden;margin:15px 0}
+.progress div{
+height:100%;width:92%;
+background:linear-gradient(90deg,#FF5A5F,#FF8A65);
+border-radius:20px;animation:grow 2s}
+@keyframes grow{from{width:0}to{width:92%}}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.badge{
+display:inline-block;padding:8px 14px;border-radius:30px;
+background:#FFE4E6;color:#BE123C;font-weight:600}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+<div>
+<h1>Welcome {{ current_user.name }} 👋</h1>
+<p>Discover AI-powered room recommendations tailored just for you.</p>
+</div>
+<a href="{{ url_for('browse') }}" class="btn btn-secondary">Browse Rooms</a>
+</div>
+
+<div class="profile-card">
+<div class="avatar">{{ current_user.name[0]|upper }}</div>
+<div>
+<h2>{{ current_user.name }}</h2>
+<p style="color:#6B7280">{{ current_user.email }}</p>
+
+{% if profile %}
+<p><b>Preferred Location:</b> {{ profile.preferred_location }}</p>
+<p><b>Budget:</b> ₹{{ profile.budget_min }} - ₹{{ profile.budget_max }}</p>
+<p><b>Move-in:</b> {{ profile.move_in_date }}</p>
+<div class="progress"><div></div></div>
+<span class="badge">AI Profile Ready</span>
+<div class="actions">
+<a class="btn btn-primary" href="{{ url_for('browse') }}">Find Matches</a>
+<a class="btn btn-secondary" href="{{ url_for('profile') }}">Edit Profile</a>
+</div>
+{% else %}
+<p style="margin:15px 0">Complete your profile to receive personalized recommendations.</p>
+<a class="btn btn-primary" href="{{ url_for('profile') }}">Complete Profile</a>
+{% endif %}
+</div>
+</div>
+
+<div class="quick">
+<div class="box">
+<i class="fa-solid fa-house"></i>
+<h3>Browse Listings</h3>
+<p>Explore verified properties matching your budget.</p>
+<a class="btn btn-primary" href="{{ url_for('browse') }}">Explore</a>
+</div>
+
+<div class="box">
+<i class="fa-solid fa-comments"></i>
+<h3>Chats</h3>
+<p>Talk directly with owners after approval.</p>
+<a class="btn btn-secondary" href="{{ url_for('chats') }}">Open Chats</a>
+</div>
+
+<div class="box">
+<i class="fa-solid fa-sliders"></i>
+<h3>Preferences</h3>
+<p>Manage your location, budget and move-in details.</p>
+<a class="btn btn-primary" href="{{ url_for('profile') }}">Update</a>
+</div>
+</div>
+
+<h2 style="margin-bottom:20px">Why Choose RentFlat?</h2>
+
+<div class="feature">
+<div class="feature-card">
+<h3>🤖 AI Matching</h3>
+<p>Get compatibility scores for every listing automatically.</p>
+</div>
+
+<div class="feature-card">
+<h3>🏠 Verified Listings</h3>
+<p>Browse trusted owner listings with transparent pricing.</p>
+</div>
+
+<div class="feature-card">
+<h3>💬 Real-time Chat</h3>
+<p>Connect instantly with owners after acceptance.</p>
+</div>
+</div>
+{% endblock %}

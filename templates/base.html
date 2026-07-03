@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}RentFlat{% endblock %}</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#F8FAFC;color:#222}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 2px 12px rgba(0,0,0,.05);z-index:999}
+.container{width:min(1180px,92%);margin:auto}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-size:28px;font-weight:700;color:#FF5A5F}
+.logo i{margin-right:8px}
+.menu{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.menu a{padding:10px 16px;border-radius:30px;font-weight:500;transition:.3s}
+.menu a:hover{background:#fff1f2;color:#FF5A5F}
+.logout{background:#FF5A5F;color:#fff}
+.logout:hover{background:#e54b50!important;color:#fff!important}
+.hero{background:linear-gradient(135deg,#FF5A5F,#FF8C70);color:#fff;padding:70px 0}
+.hero h1{font-size:44px;margin-bottom:12px}
+.hero p{font-size:18px;opacity:.95;max-width:650px}
+.main{padding:40px 0;min-height:70vh}
+.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);transition:.3s}
+.card:hover{transform:translateY(-6px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.btn{display:inline-block;padding:12px 22px;border-radius:10px;border:none;cursor:pointer;font-weight:600;transition:.3s}
+.btn-primary{background:#FF5A5F;color:#fff}
+.btn-primary:hover{background:#e54b50}
+.btn-secondary{background:#00A699;color:#fff}
+.btn-secondary:hover{background:#00897f}
+.btn-danger{background:#ef4444;color:#fff}
+input,select,textarea{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;margin-top:8px;margin-bottom:18px;font-size:15px}
+label{font-weight:600;color:#374151}
+.flash{width:min(900px,92%);margin:18px auto;background:#dcfce7;color:#166534;padding:15px;border-left:5px solid #22c55e;border-radius:10px}
+footer{margin-top:60px;background:#fff;border-top:1px solid #e5e7eb;padding:25px;text-align:center;color:#6b7280}
+@media(max-width:768px){
+.navbar{flex-direction:column;gap:16px}
+.hero h1{font-size:32px}
+.menu{justify-content:center}
+}
+</style>
+
+{% block head %}{% endblock %}
+</head>
+<body>
+
+<nav>
+<div class="container navbar">
+<a href="{{ url_for('dashboard') }}" class="logo">
+<i class="fa-solid fa-house"></i>RentFlat
+</a>
+
+<div class="menu">
+{% if current_user.is_authenticated %}
+{% if current_user.role=="tenant" %}
+<a href="{{ url_for('dashboard') }}">Dashboard</a>
+<a href="{{ url_for('browse') }}">Browse</a>
+<a href="{{ url_for('profile') }}">Profile</a>
+<a href="{{ url_for('chats') }}">Chats</a>
+{% elif current_user.role=="owner" %}
+<a href="{{ url_for('dashboard') }}">Dashboard</a>
+<a href="{{ url_for('new_listing') }}">Add Listing</a>
+<a href="{{ url_for('requests_list') }}">Requests</a>
+<a href="{{ url_for('chats') }}">Chats</a>
+{% else %}
+<a href="{{ url_for('dashboard') }}">Admin</a>
+{% endif %}
+<a href="{{ url_for('logout') }}" class="logout">Logout</a>
+{% else %}
+<a href="{{ url_for('login') }}">Login</a>
+<a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
+{% endif %}
+</div>
+</div>
+</nav>
+
+{% if current_user.is_authenticated %}
+<section class="hero">
+<div class="container">
+<h1>Find Your Perfect Room & Flatmate</h1>
+<p>Browse verified listings, discover compatible flatmates, and connect instantly through AI-powered matching.</p>
+</div>
+</section>
+{% endif %}
+
+{% with messages=get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="flash">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="container main">
+{% block content %}{% endblock %}
+</div>
+
+<footer>
+<p><strong>RentFlat</strong> • Find Rooms • Find Flatmates • Built with Flask & Socket.IO</p>
+</footer>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

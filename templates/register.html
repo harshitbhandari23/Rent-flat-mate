@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Register | RentFlat{% endblock %}
+{% block content %}
+<div style="max-width:720px;margin:30px auto;">
+<div style="background:#fff;border-radius:20px;padding:40px;box-shadow:0 10px 30px rgba(0,0,0,.08);">
+<h2 style="text-align:center;color:#111827;margin-bottom:10px;">Create Your Account</h2>
+<p style="text-align:center;color:#6B7280;margin-bottom:30px;">Join RentFlat and find your perfect room.</p>
+<form method="POST">
+<label>Full Name</label>
+<input type="text" name="name" placeholder="John Doe" required>
+
+<label>Email Address</label>
+<input type="email" name="email" placeholder="john@example.com" required>
+
+<label>Password</label>
+<input type="password" name="password" placeholder="Create password" required>
+
+<label>Register As</label>
+<select name="role" required>
+<option value="">Choose Role</option>
+<option value="tenant">Tenant</option>
+<option value="owner">Owner</option>
+</select>
+
+<button class="btn btn-primary" style="width:100%;margin-top:10px;">Create Account</button>
+</form>
+<p style="text-align:center;margin-top:20px;color:#6B7280;">
+Already registered?
+<a href="{{ url_for('login') }}" style="color:#FF5A5F;font-weight:600;">Login here</a>
+</p>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Browse Listings{% endblock %}
+{% block head %}
+<style>
+.search{background:#fff;padding:22px;border-radius:18px;box-shadow:0 10px 25px rgba(0,0,0,.08);display:flex;gap:15px;align-items:center;flex-wrap:wrap;margin-bottom:30px}
+.search input{flex:1;margin:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:25px}
+.cardp{background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 12px 28px rgba(0,0,0,.08);transition:.35s}
+.cardp:hover{transform:translateY(-8px)}
+.cardp img{width:100%;height:220px;object-fit:cover}
+.body{padding:22px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.price{font-size:26px;color:#FF5A5F;font-weight:700}
+.score{background:#FFE4E6;color:#BE123C;padding:8px 14px;border-radius:30px;font-weight:700}
+.tag{display:inline-block;margin:6px 6px 0 0;background:#F3F4F6;padding:7px 12px;border-radius:20px;font-size:13px}
+.progress{height:10px;background:#eee;border-radius:20px;margin:15px 0;overflow:hidden}
+.bar{height:100%;background:linear-gradient(90deg,#FF5A5F,#FF8A65)}
+.explain{background:#FFF7F7;padding:12px;border-left:4px solid #FF5A5F;border-radius:8px;color:#555;margin:15px 0}
+.empty{text-align:center;background:#fff;padding:70px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,.08)}
+</style>
+{% endblock %}
+{% block content %}
+<h1 style="margin-bottom:20px">Find Your Perfect Room 🏡</h1>
+
+<form class="search" method="GET">
+<input type="text" name="location" value="{{ request.args.get('location','') }}" placeholder="Search by location...">
+<button class="btn btn-primary">Search</button>
+</form>
+
+{% if results %}
+<div class="cards">
+{% for listing,match in results %}
+<div class="cardp">
+<img src="{{ listing.photo_url if listing.photo_url else 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200' }}">
+<div class="body">
+<div class="top">
+<h3>{{ listing.location }}</h3>
+<span class="score">{{ match.score }}%</span>
+</div>
+
+<div class="price">₹ {{ listing.rent }}<span style="font-size:15px;color:#777"> / month</span></div>
+
+<div>
+<span class="tag">🛏 {{ listing.room_type }}</span>
+<span class="tag">🪑 {{ listing.furnishing }}</span>
+<span class="tag">📅 {{ listing.available_from }}</span>
+</div>
+
+<div class="progress">
+<div class="bar" style="width:{{ match.score }}%"></div>
+</div>
+
+<div class="explain">
+<b>AI Match:</b><br>
+{{ match.explanation }}
+</div>
+
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a href="{{ url_for('express_interest',lid=listing.id) }}" class="btn btn-primary">❤️ Express Interest</a>
+<a href="#" class="btn btn-secondary">View Details</a>
+</div>
+
+</div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty">
+<h2>No Listings Found</h2>
+<p>Try changing the location filter or check back later.</p>
+</div>
+{% endif %}
+{% endblock %}
